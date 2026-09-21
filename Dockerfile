@@ -20,6 +20,8 @@ RUN cat /tmp/rtbem-bootstrap/source-text.part.00 \
     && tar -xzf /tmp/rtbem-source.tar.gz -C /var/www/html \
     && rm -rf /tmp/rtbem-bootstrap /tmp/rtbem-source.tar.gz
 
+COPY overrides/ /var/www/html/
+
 RUN mkdir -p /var/www/html/assets/img \
     && for f in \
       brasao-santa-barbara.png \
