@@ -25,7 +25,7 @@ services:
       traefik.http.routers.rtbemviver-hml.tls.certresolver: "le"
       traefik.http.services.rtbemviver-hml.loadbalancer.server.port: "80"
       traefik.http.routers.rtbemviver-prod.entrypoints: "websecure"
-      traefik.http.routers.rtbemviver-prod.rule: "Host(\`rtbemviver.com.br\`) || Host(\`www.rtbemviver.com.br\`)"
+      traefik.http.routers.rtbemviver-prod.rule: "Host(`rtbemviver.com.br`) || Host(`www.rtbemviver.com.br`)"
       traefik.http.routers.rtbemviver-prod.tls: "true"
       traefik.http.routers.rtbemviver-prod.tls.certresolver: "le"
       traefik.http.routers.rtbemviver-prod.service: "rtbemviver-hml"
