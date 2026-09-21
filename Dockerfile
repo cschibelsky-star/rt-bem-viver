@@ -39,9 +39,11 @@ RUN mkdir -p /var/www/html/assets/img \
       hero-bem-viver-site.jpg \
       hero-bem-viver.jpg \
       vitrine-ia-pro-logo-oficial.png; do \
-        curl -fsSL --retry 3 --retry-delay 2 \
+        echo "RTBEM_ASSET:$f"; \
+        curl -fsSL --retry 2 --retry-delay 1 \
           "https://rtbemviver.com.br/assets/img/$f" \
-          -o "/var/www/html/assets/img/$f"; \
+          -o "/var/www/html/assets/img/$f" \
+          || { rm -f "/var/www/html/assets/img/$f"; echo "RTBEM_MISSING:$f"; }; \
       done
 
 RUN mkdir -p /var/www/html/data /var/www/html/uploads/events /var/www/html/uploads/social /var/www/html/uploads/cities \
