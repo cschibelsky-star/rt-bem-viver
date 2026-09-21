@@ -13,6 +13,7 @@ services:
     environment:
       APP_ENV: ${APP_ENV:-production}
       APP_URL: ${APP_URL:-https://rtbemviver.com.br}
+      ADMIN_RECOVERY_CODE: ${ADMIN_RECOVERY_CODE}
     healthcheck:
       test: ["CMD-SHELL", "php -r '$$c=@file_get_contents(\"http://127.0.0.1/\"); exit($$c===false?1:0);'"]
       interval: 30s
