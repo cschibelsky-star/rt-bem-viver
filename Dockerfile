@@ -21,6 +21,7 @@ RUN cat /tmp/rtbem-bootstrap/source-text.part.00 \
     && rm -rf /tmp/rtbem-bootstrap /tmp/rtbem-source.tar.gz
 
 COPY overrides/ /var/www/html/
+RUN php /var/www/html/tests/auth_recovery_smoke.php
 
 RUN mkdir -p /var/www/html/assets/img \
     && for f in \
