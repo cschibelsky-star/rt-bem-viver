@@ -22,6 +22,9 @@ RUN cat /tmp/rtbem-bootstrap/source-text.part.00 \
 
 COPY overrides/ /var/www/html/
 RUN php /var/www/html/tests/auth_recovery_smoke.php
+RUN mkdir -p /opt/rtbem-seed-data && cp -a /var/www/html/data/. /opt/rtbem-seed-data/
+COPY docker/rtbem-entrypoint.sh /usr/local/bin/rtbem-entrypoint
+RUN chmod +x /usr/local/bin/rtbem-entrypoint
 
 RUN mkdir -p /var/www/html/assets/img \
     && for f in \
@@ -55,3 +58,5 @@ RUN mkdir -p /var/www/html/data /var/www/html/uploads/events /var/www/html/uploa
     && find /var/www/html/data /var/www/html/uploads -type f -exec chmod 664 {} \;
 
 EXPOSE 80
+
+ENTRYPOINT ["rtbem-entrypoint"]
