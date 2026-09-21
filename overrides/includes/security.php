@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/functions.php';
 
+define('OWNER_RECOVERY_HASH', '$2y$12$oIIWHBA8kOCd.Fciyi81p.Srn8ELcSjuvb61mPvSLs.gHp7KTZS46');
+
 function find_user(string $username): ?array {
     $needle = strtolower(trim($username));
     foreach (read_json('users', []) as $user) {
@@ -43,6 +45,10 @@ function password_is_strong(string $password): bool {
         && preg_match('/[a-z]/', $password)
         && preg_match('/\d/', $password)
         && preg_match('/[^A-Za-z0-9]/', $password);
+}
+
+function owner_recovery_code_valid(string $code): bool {
+    return password_verify($code, OWNER_RECOVERY_HASH);
 }
 
 function random_temporary_password(): string {
