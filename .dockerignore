@@ -1,0 +1,7 @@
+.git
+.env
+.env.*
+releases
+*.zip
+bootstrap/source-text.tar.gz.b64
+README_INSTALACAO.txt
