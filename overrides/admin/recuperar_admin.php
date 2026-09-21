@@ -16,9 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $code = trim($_POST['recovery_code'] ?? '');
     $new = (string)($_POST['new_password'] ?? '');
     $confirm = (string)($_POST['confirm_password'] ?? '');
-    $expected = (string)getenv('ADMIN_RECOVERY_CODE');
 
-    if ($expected === '' || !hash_equals($expected, $code)) {
+    if (!owner_recovery_code_valid($code)) {
         flash('Código de recuperação inválido.', 'error');
     } elseif ($new !== $confirm) {
         flash('As senhas não coincidem.', 'error');
@@ -43,7 +42,7 @@ require __DIR__ . '/_header.php';
 ?>
 <div class="login-card">
   <h1>Administrador geral</h1>
-  <p>Use o código de recuperação do proprietário, armazenado fora do site, para definir uma nova senha.</p>
+  <p>Use o código de recuperação do proprietário para definir uma nova senha.</p>
 
   <form method="post" class="form-grid">
     <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
