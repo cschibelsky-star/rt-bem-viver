@@ -17,26 +17,42 @@ $usersBackup = file_exists($usersFile) ? file_get_contents($usersFile) : null;
 $requestsBackup = file_exists($requestsFile) ? file_get_contents($requestsFile) : null;
 
 try {
-    $admin = find_user('admin');
-    $sumare = find_user('sumare');
+    $expectedCityAdmins = [
+        'sumare' => 'sumare',
+        'americana' => 'americana',
+        'campinas' => 'campinas',
+        'hortolandia' => 'hortolandia',
+        'santabarbara' => 'santa-barbara-doeste',
+    ];
 
+    $admin = find_user('admin');
     assert_true(is_array($admin), 'admin geral não encontrado');
     assert_true(($admin['role'] ?? '') === 'general_admin', 'perfil do admin geral inválido');
-    assert_true(is_array($sumare), 'admin de Sumaré não encontrado');
-    assert_true(($sumare['role'] ?? '') === 'city_admin', 'perfil do admin de Sumaré inválido');
-    assert_true(($sumare['city_slug'] ?? '') === 'sumare', 'vínculo da cidade de Sumaré inválido');
 
-    $_SESSION['user'] = $sumare;
-    assert_true(user_can_manage_city('sumare') === true, 'admin de Sumaré deveria administrar Sumaré');
-    assert_true(user_can_manage_city('americana') === false, 'admin de Sumaré não pode administrar Americana');
-    assert_true(is_general_admin() === false, 'admin de cidade não pode ser admin geral');
+    foreach ($expectedCityAdmins as $username => $citySlug) {
+        $cityUser = find_user($username);
+        assert_true(is_array($cityUser), "admin {$username} não encontrado");
+        assert_true(($cityUser['role'] ?? '') === 'city_admin', "perfil de {$username} inválido");
+        assert_true(($cityUser['city_slug'] ?? '') === $citySlug, "vínculo de {$username} com a cidade está incorreto");
+
+        $_SESSION['user'] = $cityUser;
+        assert_true(user_can_manage_city($citySlug) === true, "{$username} deveria administrar {$citySlug}");
+        foreach ($expectedCityAdmins as $otherUsername => $otherSlug) {
+            if ($otherSlug !== $citySlug) {
+                assert_true(user_can_manage_city($otherSlug) === false, "{$username} não pode administrar {$otherSlug}");
+            }
+        }
+        assert_true(is_general_admin() === false, "{$username} não pode ser admin geral");
+    }
 
     $_SESSION['user'] = $admin;
     assert_true(is_general_admin() === true, 'admin geral não reconhecido');
-    assert_true(user_can_manage_city('sumare') === true, 'admin geral deveria administrar Sumaré');
-    assert_true(user_can_manage_city('americana') === true, 'admin geral deveria administrar Americana');
+    foreach ($expectedCityAdmins as $citySlug) {
+        assert_true(user_can_manage_city($citySlug) === true, "admin geral deveria administrar {$citySlug}");
+    }
 
-    assert_true(create_recovery_request($sumare), 'falha ao registrar recuperação');
+    $sumare = find_user('sumare');
+    assert_true(create_recovery_request($sumare), 'falha ao registrar recuperação de Sumaré');
     $pending = array_values(array_filter(
         recovery_requests(),
         fn($r) => ($r['username'] ?? '') === 'sumare' && ($r['status'] ?? '') === 'pending'
@@ -64,7 +80,7 @@ try {
     assert_true(password_is_strong('Aa!1234567'), 'senha forte deveria ser aceita');
     assert_true(!password_is_strong('fraca123'), 'senha fraca deveria ser rejeitada');
 
-    echo "PASS: admin geral + isolamento por cidade + recuperação + senha temporária\n";
+    echo "PASS: admin geral + 5 admins municipais + isolamento entre cidades + recuperação + senha temporária\n";
 } finally {
     unset($_SESSION['user']);
 
