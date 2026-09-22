@@ -1,0 +1,97 @@
+/* RT Bem Viver — correções de produção pós-migração VPS */
+
+/* Remove a antiga composição rasterizada que continha menu e textos embutidos. */
+@media (min-width:981px){
+  .home-exact-layout .site-header{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    z-index:20;
+    background:linear-gradient(180deg,rgba(2,24,48,.78),rgba(2,24,48,.08))!important;
+  }
+  .home-exact-layout .site-header .brand,
+  .home-exact-layout .site-header nav{
+    opacity:1!important;
+    visibility:visible!important;
+  }
+  .home-exact-layout .hero-photo{
+    margin-top:0!important;
+    height:auto!important;
+    min-height:610px!important;
+    padding:176px 0 88px!important;
+    background-image:
+      linear-gradient(90deg,rgba(2,25,49,.82) 0%,rgba(5,44,83,.55) 44%,rgba(2,29,55,.58) 100%),
+      url('../img/hero-bem-viver.jpg')!important;
+    background-size:cover!important;
+    background-position:center!important;
+  }
+  .home-exact-layout .hero-home-grid{
+    height:auto!important;
+    display:grid!important;
+  }
+  .home-exact-layout .hero-copy,
+  .home-exact-layout .hero-brandmark{
+    visibility:visible!important;
+    pointer-events:auto!important;
+  }
+}
+
+/* Fotos reais em destaque; brasões provisórios deixam de aparecer na home. */
+.home-exact-layout .city-photo-card{
+  min-height:180px;
+  background-image:
+    linear-gradient(180deg,rgba(0,20,45,.08) 10%,rgba(0,24,54,.88) 100%),
+    var(--city-img)!important;
+  background-size:cover!important;
+  background-position:center!important;
+  justify-content:flex-end!important;
+  padding:18px!important;
+}
+.home-exact-layout .city-card-label{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.home-exact-layout .city-card-label strong{
+  font-size:1.08rem;
+  color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,.65);
+}
+.home-exact-layout .city-card-label small{
+  color:rgba(255,255,255,.82);
+  font-size:.76rem;
+}
+.agenda-empty-state{
+  grid-column:1/-1;
+  background:#fff;
+  border:1px solid rgba(14,116,144,.15);
+  border-radius:22px;
+  padding:32px;
+  min-height:180px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.agenda-empty-state h3{margin:0 0 8px;font-size:1.45rem;}
+.agenda-empty-state p{margin:0;color:#526171;max-width:680px;}
+.about-region-section{padding:76px 0;background:#f5f8fb;}
+.about-region-panel{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 220px;
+  gap:48px;
+  align-items:center;
+  background:#fff;
+  border-radius:28px;
+  padding:42px;
+  box-shadow:0 18px 50px rgba(10,47,76,.08);
+}
+.about-region-panel h2{font-size:clamp(2rem,4vw,3.2rem);margin:.4rem 0 1rem;}
+.about-region-panel p{color:#526171;line-height:1.7;max-width:760px;}
+.about-region-logo{width:100%;max-width:190px;justify-self:center;}
+@media(max-width:760px){
+  .about-region-panel{grid-template-columns:1fr;padding:28px;}
+  .about-region-logo{max-width:130px;}
+}
