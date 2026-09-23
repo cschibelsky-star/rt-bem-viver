@@ -52,6 +52,12 @@ RUN mkdir -p /var/www/html/assets/img \
           || { rm -f "/var/www/html/assets/img/$f"; echo "RTBEM_MISSING:$f"; }; \
       done
 
+
+# Imagem oficial de referência para Campinas: Torre do Castelo.
+RUN curl -fsSL --retry 3 --retry-delay 2 \
+  "https://portal-api.campinas.sp.gov.br/sites/default/files/noticias/imagens-destaque/8a65e7920cddedc8456dbe3368c2d05d.jpg" \
+  -o "/var/www/html/assets/img/city-campinas-torre.jpg"
+
 RUN mkdir -p /var/www/html/data /var/www/html/uploads/events /var/www/html/uploads/social /var/www/html/uploads/cities \
     && chown -R www-data:www-data /var/www/html/data /var/www/html/uploads \
     && find /var/www/html/data /var/www/html/uploads -type d -exec chmod 775 {} \; \
