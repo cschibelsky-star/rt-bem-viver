@@ -1,56 +1,61 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 $title = 'RT Bem Viver — Região Turística';
-$bodyClass = 'home-exact-layout';
+$bodyClass = 'home-poster-layout';
 $activeCities = cities(true);
 $featuredEvents = array_slice(events(['status' => 'approved', 'upcoming' => true]), 0, 4);
+
+$heroCityImages = [
+  'sumare' => 'assets/img/city-sumare.jpg',
+  'americana' => 'assets/img/city-americana.jpg',
+  'campinas' => 'assets/img/city-campinas-torre.jpg',
+  'hortolandia' => 'assets/img/city-hortolandia.jpg',
+  'santa-barbara-doeste' => 'assets/img/city-santa-barbara.jpg',
+];
+
 require __DIR__ . '/includes/header.php';
 ?>
-<section class="hero hero-photo">
-  <div class="hero-overlay"></div>
-  <div class="container hero-grid hero-home-grid">
-    <div class="hero-copy">
-      <span class="eyebrow light">Região Turística Bem Viver</span>
-      <h1>Região Turística<br><span>Bem <em>Viver</em></span></h1>
-      <p class="lead">Turismo, cultura e eventos conectando as cidades da Região Turística Bem Viver.</p>
-      <div class="hero-actions">
-        <a class="btn" href="agenda.php">Ver eventos</a>
-        <a class="btn btn-glass" href="#cidades">Conheça as cidades</a>
+
+<section class="rt-poster-hero" aria-label="Região Turística Bem Viver">
+  <div class="rt-poster-sky">
+    <div class="container rt-poster-head">
+      <div class="rt-poster-title">
+        <span class="rt-poster-kicker">REGIÃO TURÍSTICA</span>
+        <h1>Bem Viver</h1>
       </div>
+
+      <div class="rt-poster-story">MAIS<br>QUE DESTINOS,<br>BOAS HISTÓRIAS.</div>
+      <div class="rt-poster-script">Aqui<br>a vida<br>inspira.</div>
     </div>
-    <div class="hero-brandmark" aria-hidden="true">
-      <img class="hero-logo-large" src="assets/img/logo-rt-bem-viver.svg" alt="">
+
+    <div class="container rt-poster-cityline">
+      Sumaré <span>•</span> Americana <span>•</span> Campinas <span>•</span> Hortolândia <span>•</span> Santa Bárbara d’Oeste
     </div>
   </div>
-</section>
 
-<section class="section regional-visual-section" aria-labelledby="regional-visual-title">
-  <div class="container">
-    <div class="regional-visual-heading">
-      <span class="eyebrow">Região Turística Bem Viver</span>
-      <h2 id="regional-visual-title">Cidades que inspiram</h2>
-      <p>Uma região, cinco cidades e experiências que se completam.</p>
-    </div>
+  <div class="rt-poster-panels">
+    <?php foreach ($activeCities as $city):
+      $slug = $city['slug'] ?? '';
+      $img = $heroCityImages[$slug] ?? ($city['image'] ?? 'assets/img/city-default.svg');
+    ?>
+      <a class="rt-poster-city rt-city-<?= e($slug) ?>"
+         href="cidade.php?slug=<?= e($slug) ?>"
+         style="--rt-city-img:url('<?= e($img) ?>')">
+        <span class="rt-poster-city-label"><?= e($city['name']) ?></span>
+      </a>
+    <?php endforeach; ?>
+  </div>
 
-    <div class="regional-city-panorama">
-      <?php foreach ($activeCities as $city):
-        $visual = $city['image'] ?? 'assets/img/city-default.svg';
-        if (($city['slug'] ?? '') === 'campinas') {
-          $visual = 'assets/img/city-campinas-torre.jpg';
-        }
-      ?>
-        <a class="regional-city-panel regional-city-<?= e($city['slug']) ?>"
-           href="cidade.php?slug=<?= e($city['slug']) ?>"
-           style="--regional-city-img:url('<?= e($visual) ?>')">
-          <span class="regional-city-shade"></span>
-          <span class="regional-city-name"><?= e($city['name']) ?></span>
-        </a>
-      <?php endforeach; ?>
-    </div>
-
-    <div class="regional-visual-footer">
-      <strong>Cidades que se completam para você viver mais.</strong>
-      <a class="btn btn-outline-blue" href="#cidades">Explorar as cidades</a>
+  <div class="rt-poster-bottom">
+    <div class="container">
+      <div class="rt-poster-tagline">CIDADES QUE SE COMPLETAM<br><strong>PARA VOCÊ VIVER MAIS.</strong></div>
+      <div class="rt-poster-icons" aria-label="Experiências da Região">
+        <span>♧ <small>NATUREZA</small></span>
+        <span>▥ <small>CULTURA</small></span>
+        <span>◉ <small>GASTRONOMIA</small></span>
+        <span>▣ <small>EXPERIÊNCIAS</small></span>
+        <span>♡ <small>PESSOAS</small></span>
+      </div>
     </div>
   </div>
 </section>
@@ -85,6 +90,7 @@ require __DIR__ . '/includes/header.php';
       <p>Eventos cadastrados pelas cidades participantes e publicados após revisão.</p>
       <a class="btn" href="agenda.php">Ver agenda completa</a>
     </aside>
+
     <div class="event-photo-grid">
       <?php if (!$featuredEvents): ?>
         <div class="agenda-empty-state">
@@ -124,4 +130,5 @@ require __DIR__ . '/includes/header.php';
     <img src="assets/img/logo-rt-bem-viver.svg" alt="RT Bem Viver" class="about-region-logo">
   </div>
 </section>
+
 <?php require __DIR__ . '/includes/footer.php'; ?>
