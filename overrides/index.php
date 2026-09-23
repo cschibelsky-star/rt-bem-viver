@@ -24,6 +24,37 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<section class="section regional-visual-section" aria-labelledby="regional-visual-title">
+  <div class="container">
+    <div class="regional-visual-heading">
+      <span class="eyebrow">Região Turística Bem Viver</span>
+      <h2 id="regional-visual-title">Cidades que inspiram</h2>
+      <p>Uma região, cinco cidades e experiências que se completam.</p>
+    </div>
+
+    <div class="regional-city-panorama">
+      <?php foreach ($activeCities as $city):
+        $visual = $city['image'] ?? 'assets/img/city-default.svg';
+        if (($city['slug'] ?? '') === 'campinas') {
+          $visual = 'assets/img/city-campinas-torre.jpg';
+        }
+      ?>
+        <a class="regional-city-panel regional-city-<?= e($city['slug']) ?>"
+           href="cidade.php?slug=<?= e($city['slug']) ?>"
+           style="--regional-city-img:url('<?= e($visual) ?>')">
+          <span class="regional-city-shade"></span>
+          <span class="regional-city-name"><?= e($city['name']) ?></span>
+        </a>
+      <?php endforeach; ?>
+    </div>
+
+    <div class="regional-visual-footer">
+      <strong>Cidades que se completam para você viver mais.</strong>
+      <a class="btn btn-outline-blue" href="#cidades">Explorar as cidades</a>
+    </div>
+  </div>
+</section>
+
 <section class="cities-band" id="cidades">
   <div class="container cities-layout">
     <div class="cities-title">
