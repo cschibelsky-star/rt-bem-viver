@@ -95,3 +95,102 @@
   .about-region-panel{grid-template-columns:1fr;padding:28px;}
   .about-region-logo{max-width:130px;}
 }
+
+/* Painel institucional regional — inspirado na arte Cidades que Inspiram. */
+.regional-visual-section{
+  padding:72px 0 58px;
+  background:linear-gradient(180deg,#f7fbff 0%,#eef6fb 100%);
+}
+.regional-visual-heading{
+  max-width:760px;
+  margin:0 auto 28px;
+  text-align:center;
+}
+.regional-visual-heading h2{
+  margin:.35rem 0 .55rem;
+  font-size:clamp(2rem,4vw,3.35rem);
+  color:#0f4f86;
+}
+.regional-visual-heading p{
+  margin:0;
+  color:#526171;
+  font-size:1.05rem;
+}
+.regional-city-panorama{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  min-height:420px;
+  overflow:hidden;
+  border-radius:30px;
+  box-shadow:0 24px 60px rgba(11,65,105,.18);
+  background:#0d5c97;
+}
+.regional-city-panel{
+  position:relative;
+  min-width:0;
+  background-image:var(--regional-city-img);
+  background-size:cover;
+  background-position:center;
+  text-decoration:none;
+  isolation:isolate;
+  transition:flex .25s ease,transform .25s ease,filter .25s ease;
+}
+.regional-city-panel + .regional-city-panel{
+  border-left:2px solid rgba(255,255,255,.72);
+}
+.regional-city-shade{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(180deg,rgba(0,32,69,.05) 22%,rgba(0,27,58,.82) 100%);
+}
+.regional-city-name{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:20px;
+  color:#fff;
+  font-size:clamp(.95rem,1.5vw,1.35rem);
+  font-weight:800;
+  line-height:1.08;
+  text-shadow:0 2px 12px rgba(0,0,0,.6);
+}
+.regional-city-panel:hover{
+  transform:scale(1.018);
+  z-index:2;
+  filter:saturate(1.06);
+}
+.regional-visual-footer{
+  margin-top:22px;
+  display:flex;
+  justify-content:space-between;
+  gap:22px;
+  align-items:center;
+}
+.regional-visual-footer strong{
+  color:#143b5c;
+  font-size:1.05rem;
+}
+@media(max-width:900px){
+  .regional-city-panorama{
+    display:flex;
+    min-height:360px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    border-radius:24px;
+  }
+  .regional-city-panel{
+    flex:0 0 72%;
+    scroll-snap-align:center;
+  }
+  .regional-city-panel + .regional-city-panel{border-left:1px solid rgba(255,255,255,.72);}
+  .regional-visual-footer{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+@media(max-width:560px){
+  .regional-visual-section{padding:50px 0 42px;}
+  .regional-city-panorama{min-height:330px;}
+  .regional-city-panel{flex-basis:82%;}
+}
