@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="footer-credit">
-      <a class="vitrine-credit" href="https://vitrineaipro.com.br" target="_blank" rel="noopener" aria-label="Vitrine IA Pro">
+      <a class="vitrine-credit" href="https://vitrineiapro.com.br" target="_blank" rel="noopener" aria-label="Vitrine IA Pro">
         <img src="assets/img/vitrine-ia-pro-logo-oficial.png" alt="Vitrine IA Pro" class="vitrine-footer-logo">
         <span>Site doado e desenvolvido pela Vitrine IA Pro</span>
       </a>
