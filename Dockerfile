@@ -2,8 +2,8 @@ FROM php:8.3-apache
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       ca-certificates curl libfreetype6-dev libjpeg62-turbo-dev libpng-dev libonig-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+       ca-certificates curl libfreetype6-dev libjpeg62-turbo-dev libpng-dev libwebp-dev libonig-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) gd mbstring \
     && a2enmod rewrite headers \
     && rm -rf /var/lib/apt/lists/*
